@@ -1,8 +1,12 @@
+'use strict';
+
 const { app, BrowserWindow, nativeTheme } = require('electron');
 
 function createWindow () {
   // Create the browser window.
+  // https://www.electronjs.org/docs/api/browser-window
   const win = new BrowserWindow({
+    minWidth: 600,
     width: 800,
     height: 600,
     webPreferences: {
@@ -40,7 +44,7 @@ app.on('window-all-closed', () => {
 // https://www.electronjs.org/docs/tutorial/mojave-dark-mode-guide
 nativeTheme.on('updated', function theThemeHasChanged () {
     console.log('nativeTheme.shouldUseDarkColors: ' + (nativeTheme.shouldUseDarkColors === true ? 'true' : 'false'));
-  updateMyAppTheme(nativeTheme.shouldUseDarkColors);
+    // updateMyAppTheme(nativeTheme.shouldUseDarkColors);
 });
 
 
