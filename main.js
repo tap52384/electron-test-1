@@ -27,11 +27,11 @@ function createWindow () {
 
   // Open the DevTools.
   // https://www.electronjs.org/docs/api/web-contents#contentsopendevtoolsoptions
-  win.webContents.openDevTools(
-      {
-          'mode': 'bottom'
-      }
-  );
+//   win.webContents.openDevTools(
+//       {
+//           'mode': 'bottom'
+//       }
+//   );
 }
 
 // This method will be called when Electron has finished
