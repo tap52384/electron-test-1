@@ -1,0 +1,92 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json or the definition README at
+// https://github.com/microsoft/vscode-dev-containers/tree/master/containers/docker-existing-dockerfile
+// https://code.visualstudio.com/docs/remote/containers#_devcontainerjson-reference
+{
+	"name": "electron-test-1",
+
+	// Sets the run context to one level up instead of the .devcontainer folder.
+    // "context": "..",
+
+    // https://github.com/tap52384/ubi8-php-73
+    // Since this is an s2i-based image, this image must be created locally first
+    // using "s2i build", as described in more detail in the the README:
+    // docker build --pull https://github.com/tap52384/ubi8-php-73.git -t tap52384/ubi8-php-73:latest
+    // # Clone the code
+    // git clone -q https://github.com/tap52384/devoted-transportation-llc.git
+    // # Change this variable to update the code folder location throughout this script
+    // app_folder=~/code/electron-test-1/
+    // touch "$app_folder".env
+    // s2i build \
+    // --environment-file "$app_folder"/.env \
+    // "$app_folder" \
+    // tap52384/ubi8-php-73:latest \
+    // tap52384:s2i
+    "image": "nodejs-12:s2i",
+
+	// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
+	//"dockerFile": "Dockerfile",
+
+	// Uncomment the next line to have VS Code connect as an existing non-root user in the container.
+	// On Linux, by default, the container user's UID/GID will be updated to match your local user. See
+	// https://aka.ms/vscode-remote/containers/non-root for details on adding a non-root user if none exist.
+    // "remoteUser": "vscode",
+
+    // Uncomment the next line if you will use a ptrace-based debugger like C++, Go, and Rust
+    // Options on "docker run"
+    // "runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
+    "runArgs": [
+        "--name=hakchi",
+        //"--user=${localEnv:USER}",
+        // "--hostname=$(hostname)",
+        "--env-file=${localWorkspaceFolder}/.env"
+    ],
+
+    // An array of additional mount points to add to the container. Each value
+    // is a string that accepts the same values as the Docker CLI --mount flag.
+    // You can use ${localWorkspaceFolder} in this property to refer to the local
+    // source code.
+    // https://code.visualstudio.com/docs/remote/containers#_devcontainerjson-reference
+    "mounts":[
+        "source=${localWorkspaceFolder},target=/opt/app-root/src,type=bind,readonly=0"
+    ],
+
+    // For "type=volume", source names the shared volume instead of specifying the source
+    // "workspaceMount": "source=${localWorkspaceFolder},target=/opt/app-root/src,type=bind,readonly=0",
+    "workspaceFolder": "/opt/app-root/src/",
+
+	// Uncomment the next line to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-in-docker for details.
+	// "mounts": [ "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind" ],
+
+	// Use 'settings' to set *default* container specific settings.json values on container create.
+	// You can edit these settings after create using File > Preferences > Settings > Remote.
+	"settings": {
+		// This will ignore your local shell user setting for Linux since shells like zsh are typically
+		// not in base container images. You can also update this to an specific shell to ensure VS Code
+		// uses the right one for terminals and tasks. For example, /bin/bash (or /bin/ash for Alpine).
+		"terminal.integrated.shell.linux": "/usr/bin/bash"
+	},
+
+	// Use 'appPort' to create a container with published ports. If the port isn't working, be sure
+	// your server accepts connections from all interfaces (0.0.0.0 or '*'), not just localhost.
+	"appPort": [
+        "8080:8080/tcp",
+        "8443:8443/tcp"
+    ],
+
+    // Uncomment the next line to run commands after the container is created - for example installing git.
+    // If this doesn't seem to work, delete /.vscode-server/data/Machine/.postCreateCommandMarker
+    // and then use the Remote-Containers command in VS Code to "Rebuild Container"
+    // View --> Command Palette
+	"postCreateCommand": "rm -f .vscode-server/data/Machine/.postCreateCommandMarker && echo 'hello there!'",
+
+	// Add the IDs of extensions you want installed when the container is created in the array below.
+    "extensions": [],
+
+    // By default, when VS Code starts a container, it will override the
+    // container's default command to be /bin/sh -c "while sleep 1000; do :; done".
+    // This is done because the container will stop if the default command fails or exits. However,
+    // this may not work for certain images.
+    // https://code.visualstudio.com/docs/remote/containers
+    // This is needed so that Apache runs normally!
+    "overrideCommand": false
+}
