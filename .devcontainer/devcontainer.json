@@ -9,18 +9,7 @@
 
     // https://github.com/tap52384/ubi8-php-73
     // Since this is an s2i-based image, this image must be created locally first
-    // using "s2i build", as described in more detail in the the README:
-    // docker build --pull https://github.com/tap52384/ubi8-php-73.git -t tap52384/ubi8-php-73:latest
-    // # Clone the code
-    // git clone -q https://github.com/tap52384/devoted-transportation-llc.git
-    // # Change this variable to update the code folder location throughout this script
-    // app_folder=~/code/electron-test-1/
-    // touch "$app_folder".env
-    // s2i build \
-    // --environment-file "$app_folder"/.env \
-    // "$app_folder" \
-    // tap52384/ubi8-php-73:latest \
-    // tap52384:s2i
+    // using "s2i build", as described in more detail in the the README.
     "image": "nodejs-12:s2i",
 
 	// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
